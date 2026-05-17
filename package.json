@@ -1,0 +1,43 @@
+{
+  "name": "tracebeam",
+  "version": "1.0.0",
+  "description": "Minimal TypeScript tracing SDK for measuring async operations, tracking events, and capturing runtime errors.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "typescript",
+    "tracing",
+    "sdk",
+    "observability",
+    "monitoring",
+    "performance",
+    "events",
+    "analytics"
+  ],
+  "author": "Sanja Mandic",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
