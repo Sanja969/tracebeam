@@ -21,3 +21,9 @@ export const configure = (options: TracebeamConfig): void => {
 export const getConfig = (): TracebeamConfig => {
   return config;
 };
+
+export const resetConfig = (): void => {
+  config = {
+    bufferEvents: true,
+  };
+};
