@@ -20,7 +20,8 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "vitest"
   },
   "keywords": [
     "typescript",
@@ -34,10 +35,10 @@
   ],
   "author": "Sanja Mandic",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^25.8.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.6"
   }
 }
