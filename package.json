@@ -1,6 +1,6 @@
 {
   "name": "tracebeam",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Minimal TypeScript tracing SDK for measuring async operations, tracking events, and capturing runtime errors.",
   "type": "module",
   "main": "./dist/index.cjs",
