@@ -1,5 +1,6 @@
 import type { TraceEvent } from "./types.js";
 import { getConfig } from "./config.js";
+import { refreshOverlay } from "./overlay.js";
 
 const events: TraceEvent[] = [];
 
@@ -17,6 +18,7 @@ export const addEvent = async (event: TraceEvent): Promise<void> => {
   if (config.transport) {
     await config.transport(event);
   }
+  refreshOverlay();
 };
 
 export const clearEvents = (): void => {

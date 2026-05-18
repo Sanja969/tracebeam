@@ -1,8 +1,6 @@
 # Tracebeam ⚡
 
-Minimal TypeScript tracing SDK for measuring async operations, tracking events, and capturing runtime errors.
-
-Tracebeam helps developers debug async flows, monitor performance, and inspect custom events with a lightweight and TypeScript-first API.
+Lightweight TypeScript tracing SDK for async performance measurements, runtime event tracking, error capturing, and browser debugging overlays.
 
 ---
 
@@ -13,6 +11,7 @@ Tracebeam helps developers debug async flows, monitor performance, and inspect c
 -	📦 ESM + CommonJS support
 -	⏱ Async performance measurements
 -	🚨 Error tracking
+- 🖥 Browser debug overlay
 -	🗂 Optional in-memory event buffering
 -	🚀 Custom transport support
 -	🔍 Developer-friendly tracing utilities
@@ -100,6 +99,19 @@ import { clearEvents } from "tracebeam";
 clearEvents();
 ```
 
+### Enable browser debug overlay
+
+```ts
+import { enableOverlay, disableOverlay } from "tracebeam";
+
+enableOverlay();
+
+// later, if needed
+disableOverlay();
+```
+
+The overlay displays the latest tracked events, measured async operations, and captured errors directly in the browser.
+
 ---
 
 ## Example Event
@@ -124,6 +136,7 @@ clearEvents();
 ```ts
 import {
   configure,
+  enableOverlay,
   track,
   measure,
   captureError,
@@ -141,6 +154,8 @@ configure({
     });
   },
 });
+
+enableOverlay();
 
 await track("app-start");
 
@@ -160,6 +175,14 @@ console.log(getEvents());
 ---
 
 ## API
+
+### enableOverlay()
+
+Enables the browser debug overlay.
+
+### disableOverlay()
+
+Removes the browser debug overlay.
 
 ### configure(options)
 
