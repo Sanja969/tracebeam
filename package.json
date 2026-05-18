@@ -15,8 +15,8 @@
   },
   "files": [
     "dist",
-    "README.md",
-    "LICENSE",
+    "Readme.md",
+    "LICENCE",
     "demo.gif"
   ],
   "scripts": {
