@@ -4,7 +4,7 @@ Lightweight TypeScript tracing SDK for async performance measurements, runtime e
 
 ## Demo
 
-![Tracebeam Demo](./demo.gif)
+![Tracebeam Demo](https://raw.githubusercontent.com/Sanja969/tracebeam/main/demo.gif)
 
 ---
 
