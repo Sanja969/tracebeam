@@ -2,6 +2,10 @@
 
 Lightweight TypeScript tracing SDK for async performance measurements, runtime event tracking, error capturing, and browser debugging overlays.
 
+## Demo
+
+![Tracebeam Demo](./demo.gif)
+
 ---
 
 ## Features
