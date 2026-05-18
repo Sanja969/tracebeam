@@ -23,4 +23,5 @@ export const addEvent = async (event: TraceEvent): Promise<void> => {
 
 export const clearEvents = (): void => {
   events.length = 0;
+  refreshOverlay();
 };
