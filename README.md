@@ -1,8 +1,22 @@
 # Tracebeam ⚡
+Local-first realtime tracing and debugging toolkit
+for frontend and Node.js applications.
 
-Lightweight TypeScript tracing SDK for async performance measurements, runtime event tracking, error capturing, and browser debugging overlays.
+Tracebeam helps developers inspect realtime events, traces,
+sessions, errors, and performance metrics locally — without
+complex cloud setup.
+
+## Architecture
+
+Client App
+    ↓ Tracebeam SDK
+Go Ingestion Server
+    ↓ WebSocket
+Tracebeam Studio Dashboard
 
 ## Demo
+
+Demo below shows Tracebeam running inside a sample browser app. The floating overlay is provided by the SDK.
 
 ![Tracebeam Demo](https://raw.githubusercontent.com/Sanja969/tracebeam/main/demo.gif)
 
@@ -139,6 +153,7 @@ configure({
 ```json
 {
   "id": "d9f6c3...",
+  "sessionId": "session_...",
   "name": "fetch-users",
   "timestamp": 1715950000000,
   "duration": 42.37,
@@ -262,6 +277,16 @@ Clears buffered events.
 ### resetSession()
 
 Resets the generated session ID.
+
+---
+
+## Roadmap
+
+- Global error instrumentation
+- Fetch instrumentation
+- Node.js integrations
+- Express middleware
+- Realtime local debugging tools
 
 ---
 
