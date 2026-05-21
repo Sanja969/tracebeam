@@ -19,6 +19,7 @@ Lightweight TypeScript tracing SDK for async performance measurements, runtime e
 -	🗂 Optional in-memory event buffering
 -	🚀 Custom transport support
 -	🔍 Developer-friendly tracing utilities
+- 🧩 Automatic session IDs
 
 ---
 
@@ -116,6 +117,21 @@ disableOverlay();
 
 The overlay displays the latest tracked events, measured async operations, and captured errors directly in the browser.
 
+### Session tracking
+
+Tracebeam automatically attaches a `sessionId` to every event.
+
+You can also provide a custom session ID:
+
+```ts
+import { configure } from "tracebeam";
+
+configure({
+  sessionId: "checkout-session-1",
+});
+
+```
+
 ---
 
 ## Example Event
@@ -198,6 +214,7 @@ Configures Tracebeam behavior.
 |---|---|
 | bufferEvents | boolean |
 | transport | (event: TraceEvent) => void \| Promise<void> |
+| sessionId | string |
 
 ### track(name, metadata?)
 
@@ -216,7 +233,6 @@ Tracks a custom event.
 Measures async function duration.
 
 #### Parameters
-
 
 | Parameter | Type |
 |---|---|
@@ -242,6 +258,10 @@ Returns buffered events from local runtime memory.
 ### clearEvents()
 
 Clears buffered events.
+
+### resetSession()
+
+Resets the generated session ID.
 
 ---
 

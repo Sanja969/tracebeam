@@ -1,16 +1,13 @@
+import { createId, getSessionId } from "./session.js"
 import { addEvent } from "./storage.js"
-
-const createId = (): string => {
-  if(typeof crypto !== undefined) {
-    return crypto.randomUUID()
-  }
-
-  return `${Date.now}-${Math.random().toString(36).slice(2)}`
-}
+import { getConfig } from "./config.js";
 
 export const track = async (name: string, metadata?: Record<string, any>) => {
+  const config = getConfig()
+
   await addEvent({
     id: createId(),
+    sessionId: getSessionId(config.sessionId),
     name,
     timestamp: Date.now(),
     type: "track",
@@ -19,8 +16,11 @@ export const track = async (name: string, metadata?: Record<string, any>) => {
 }
 
 export const captureError = async (error: Error, metadata?: Record<string, any>) => {
+  const config = getConfig()
+
   await addEvent({
     id: createId(),
+    sessionId: getSessionId(config.sessionId),
     name: error.message,
     timestamp: Date.now(),
     type: "error",
@@ -29,6 +29,7 @@ export const captureError = async (error: Error, metadata?: Record<string, any>)
 }
 
 export const measure = async <T>(name: string, fn: () => Promise<T>, metadata?: Record<string, any>): Promise<T> => {
+  const config = getConfig()
   const start = performance.now();
 
     try {
@@ -41,6 +42,7 @@ export const measure = async <T>(name: string, fn: () => Promise<T>, metadata?: 
     } finally {
       await addEvent({
       id: createId(),
+      sessionId: getSessionId(config.sessionId),
       name: name,
       timestamp: Date.now(),
       duration: performance.now() - start,

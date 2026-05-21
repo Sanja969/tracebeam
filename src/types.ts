@@ -2,6 +2,8 @@ export type TraceEventType = "track" | "measure" | "error";
 
 export interface TraceEvent {
   id: string;
+  sessionId?: string;
+  traceId?: string;
   name: string;
   timestamp: number;
   duration?: number;

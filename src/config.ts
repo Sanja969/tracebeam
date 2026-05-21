@@ -5,6 +5,7 @@ export type TracebeamTransport = (event: TraceEvent) => void | Promise<void>;
 export type TracebeamConfig = {
   transport?: TracebeamTransport;
   bufferEvents?: boolean;
+  sessionId?: string;
 };
 
 let config: TracebeamConfig = {
