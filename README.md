@@ -18,7 +18,7 @@ Tracebeam Studio Dashboard
 
 Demo below shows Tracebeam running inside a sample browser app. The floating overlay is provided by the SDK.
 
-![Tracebeam Demo](https://raw.githubusercontent.com/Sanja969/tracebeam/main/demoex.gif)
+![Tracebeam Demo](https://raw.githubusercontent.com/Sanja969/tracebeam/main/demo.gif)
 
 ---
 
