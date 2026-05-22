@@ -34,6 +34,7 @@ Demo below shows Tracebeam running inside a sample browser app. The floating ove
 -	🚀 Custom transport support
 -	🔍 Developer-friendly tracing utilities
 - 🧩 Automatic session IDs
+- Global error instrumentation ✅
 
 ---
 
@@ -100,6 +101,19 @@ try {
     source: "auth-flow",
   });
 }
+```
+
+### Enable automatic global error tracking
+
+```ts
+import { enableGlobalErrorCapture } from "tracebeam";
+
+enableGlobalErrorCapture();
+```
+
+This automatically captures:
+- uncaught runtime errors
+- unhandled promise rejections
 ```
 
 ### Read buffered events
@@ -282,7 +296,7 @@ Resets the generated session ID.
 
 ## Roadmap
 
-- Global error instrumentation
+- Global error instrumentation ✅
 - Fetch instrumentation
 - Node.js integrations
 - Express middleware
