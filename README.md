@@ -34,7 +34,8 @@ Demo below shows Tracebeam running inside a sample browser app. The floating ove
 -	🚀 Custom transport support
 -	🔍 Developer-friendly tracing utilities
 - 🧩 Automatic session IDs
-- Global error instrumentation ✅
+- ✅ Global error instrumentation 
+- 🌐 Fetch instrumentation
 
 ---
 
@@ -114,7 +115,23 @@ enableGlobalErrorCapture();
 This automatically captures:
 - uncaught runtime errors
 - unhandled promise rejections
+
+### Enable fetch instrumentation
+
+```ts
+import { enableFetchInstrumentation } from "tracebeam";
+
+enableFetchInstrumentation();
 ```
+
+Tracebeam will automatically measure browser `fetch` requests and capture failed requests as errors.
+
+Captured metadata includes:
+
+- URL
+- HTTP method
+- status code
+- duration
 
 ### Read buffered events
 
@@ -291,6 +308,20 @@ Clears buffered events.
 ### resetSession()
 
 Resets the generated session ID.
+
+### enableGlobalErrorCapture()
+
+Automatically captures:
+- uncaught runtime errors
+- unhandled promise rejections
+
+### enableFetchInstrumentation()
+
+Automatically instruments browser `fetch` requests.
+
+### disableFetchInstrumentation()
+
+Restores the original browser `fetch` implementation.
 
 ---
 
