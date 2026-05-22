@@ -3,6 +3,15 @@
   "version": "1.2.1",
   "description": "Lightweight TypeScript tracing SDK with async measurements, runtime event tracking, custom transports, and a browser debug overlay.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sanja969/tracebeam.git"
+  },
+  "homepage": "https://github.com/Sanja969/tracebeam#readme",
+  "bugs": {
+    "url": "https://github.com/Sanja969/tracebeam/issues"
+  },
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
