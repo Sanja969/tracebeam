@@ -1,8 +1,21 @@
-import { captureError } from "./tracker.js";
+import { captureError, emitEvent } from "./tracker.js";
 import { measure } from "./tracker.js";
 
 let fetchInstrumentationEnabled = false;
 let originalFetch: typeof fetch | null = null;
+
+export const recordMeasure = async (
+  name: string,
+  duration: number,
+  metadata?: Record<string, any>,
+) => {
+  await emitEvent({
+    name,
+    type: "measure",
+    duration,
+    ...(metadata && { metadata }),
+  });
+};
 
 export const enableFetchInstrumentation = (): void => {
   if (fetchInstrumentationEnabled) {
@@ -19,37 +32,47 @@ export const enableFetchInstrumentation = (): void => {
   window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = getFetchUrl(input);
     const method = init?.method || "GET";
+    const start = performance.now();
 
     try {
-      const response = await measure(
-        `fetch ${method} ${url}`,
-        async () => {
-          return originalFetch!(input, init);
-        },
-        {
-          source: "fetch",
-          url,
-          method,
-        },
-      );
+      const response = await originalFetch!(input, init);
+      const duration = performance.now() - start;
+
+      await recordMeasure(`fetch ${method} ${url}`, duration, {
+        source: "fetch",
+        url,
+        method,
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+      });
 
       if (!response.ok) {
-        await captureError(new Error(`Fetch failed with status ${response.status}`), {
-          source: "fetch",
-          url,
-          method,
-          status: response.status,
-          statusText: response.statusText,
-        });
+        await captureError(
+          new Error(`Fetch failed with status ${response.status}`),
+          {
+            source: "fetch",
+            url,
+            method,
+            status: response.status,
+            statusText: response.statusText,
+            ok: response.ok,
+          },
+        );
       }
 
       return response;
     } catch (error) {
-      await captureError(error as Error, {
-        source: "fetch",
-        url,
-        method,
-      });
+      const duration = performance.now() - start;
+
+      if (error instanceof Error) {
+        await captureError(error, {
+          source: "fetch",
+          url,
+          method,
+          duration,
+        });
+      }
 
       throw error;
     }

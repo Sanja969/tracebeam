@@ -1,52 +1,75 @@
-import { createId, getSessionId } from "./session.js"
-import { addEvent } from "./storage.js"
+import { createId, getSessionId } from "./session.js";
+import { addEvent } from "./storage.js";
 import { getConfig } from "./config.js";
+import type { TraceEventType } from "./types.js";
+
+export const emitEvent = async (event: {
+  name: string;
+  type: TraceEventType;
+  duration?: number;
+  metadata?: Record<string, any>;
+}) => {
+  const config = getConfig();
+
+  await addEvent({
+    id: createId(),
+    sessionId: getSessionId(config.sessionId),
+    name: event.name,
+    timestamp: Date.now(),
+    type: event.type,
+    ...(typeof event.duration === "number" && {
+      duration: event.duration,
+    }),
+    ...(event.metadata && {
+      metadata: event.metadata,
+    }),
+  });
+};
 
 export const track = async (name: string, metadata?: Record<string, any>) => {
-  const config = getConfig()
-
-  await addEvent({
-    id: createId(),
-    sessionId: getSessionId(config.sessionId),
+  await emitEvent({
     name,
-    timestamp: Date.now(),
     type: "track",
-    ...(metadata && { metadata })
-  })
-}
+    ...(metadata && { metadata }),
+  });
+};
 
-export const captureError = async (error: Error, metadata?: Record<string, any>) => {
-  const config = getConfig()
+export const captureError = async (
+  error: Error,
 
-  await addEvent({
-    id: createId(),
-    sessionId: getSessionId(config.sessionId),
+  metadata?: Record<string, any>,
+) => {
+  await emitEvent({
     name: error.message,
-    timestamp: Date.now(),
     type: "error",
-    ...(metadata && { metadata })
-  })
-}
+    ...(metadata && { metadata }),
+  });
+};
 
-export const measure = async <T>(name: string, fn: () => Promise<T>, metadata?: Record<string, any>): Promise<T> => {
-  const config = getConfig()
+export const measure = async <T>(
+  name: string,
+  fn: () => Promise<T>,
+  metadata?: Record<string, any>,
+): Promise<T> => {
   const start = performance.now();
 
-    try {
-      return await fn()
-    } catch(error) {
-      if (error instanceof Error) {
-        await captureError(error, {measuredTask: name, ...metadata})
-      }
-      throw error
-    } finally {
-      await addEvent({
-      id: createId(),
-      sessionId: getSessionId(config.sessionId),
-      name: name,
-      timestamp: Date.now(),
-      duration: performance.now() - start,
+  try {
+    return await fn();
+  } catch (error) {
+    if (error instanceof Error) {
+      await captureError(error, {
+        measuredTask: name,
+        ...metadata,
+      });
+    }
+
+    throw error;
+  } finally {
+    await emitEvent({
+      name,
       type: "measure",
-      ...(metadata && { metadata })
-    })}
-}
+      duration: performance.now() - start,
+      ...(metadata && { metadata }),
+    });
+  }
+};

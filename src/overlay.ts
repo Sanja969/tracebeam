@@ -19,10 +19,10 @@ const renderOverlay = (): void => {
     overlayElement.id = "tracebeam-overlay";
 
     overlayElement.style.position = "fixed";
-    overlayElement.style.bottom = "20px";
-    overlayElement.style.right = "20px";
-    overlayElement.style.width = "320px";
-    overlayElement.style.maxHeight = "360px";
+    overlayElement.style.bottom = "24px";
+    overlayElement.style.right = "24px";
+    overlayElement.style.width = "300px";
+    overlayElement.style.maxHeight = "300px";
     overlayElement.style.overflowY = "auto";
     overlayElement.style.background = "rgba(10, 10, 10, 0.92)";
     overlayElement.style.color = "#30fffe";
@@ -32,15 +32,15 @@ const renderOverlay = (): void => {
     overlayElement.style.fontFamily = "monospace";
     overlayElement.style.fontSize = "12px";
     overlayElement.style.zIndex = "999999";
-    overlayElement.style.boxShadow = "0 0 18px rgba(48, 255, 254, 0.45)";
+    overlayElement.style.boxShadow = "0 0 24px rgba(48, 255, 254, 0.28)";
 
     document.body.appendChild(overlayElement);
   }
 
-  const events = getEvents().slice(-10).reverse();
+  const events = getEvents().slice(-5).reverse();
 
   overlayElement.innerHTML = `
-    <div style="font-weight: bold; margin-bottom: 10px; font-size: 14px;">
+    <div style="font-weight: bold; margin-bottom: 10px; font-size: 13px;">
       ⚡ Tracebeam
     </div>
     ${
@@ -51,7 +51,7 @@ const renderOverlay = (): void => {
                 <div style="border-top: 1px solid rgba(48,255,254,0.25); padding: 8px 0;">
                   ${formatEvent(event)}
                 </div>
-              `
+              `,
             )
             .join("")
         : `<div style="opacity: 0.7;">No events yet</div>`
